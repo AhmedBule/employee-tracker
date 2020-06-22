@@ -14,3 +14,74 @@ var connection = mysql.createConnection({
   password: "soccer123",
   database: "employees_db"
 });
+// connect to the mysql server and sql database
+connection.connect(function(err) {
+    if (err) throw err;
+    // run the start function after the connection is made to prompt the user
+    start();
+  });
+  
+  // function which prompts the user for what action they should take
+  function start() {
+    inquirer
+      .prompt({
+        name: "userChoice",
+        type: "list",
+        message: "What would you like to do?",
+        choices: ["Add new employees", "View Employees", "View Department", "View Roles", "Add Department", "Add Role", "EXIT"]
+        // "view employees", "update employees",
+      })
+      .then(function(answer) {
+        // based on their answer, either call the bid or the post functions
+        if (answer.userChoice=== "Add new employees") {
+          addEmployee();
+        }
+        else if(answer.userChoice === "View Employees") {
+          showEmployees();
+        } else{
+          connection.end();
+        }
+      });
+  }
+
+  function addEmployee(){
+      inquirer.prompt([
+          {
+           name:"first_name",
+           type: "input",
+           message:"Enter Employee First name ?"
+           },
+           {
+            name:"last_name",
+            type: "input",
+            message:"Enter Employee Last name ?"
+            },
+            {
+                name:"role_id",
+                type: "list",
+                choices: [2, 3, 5, 6, 8, 9],
+                message:"Enter Employee role ID?"
+                },
+                {
+                    name:"manager_id",
+                    type: "list",
+                    choices: [1, 2, 3],
+                    message:"Enter Manager's name?"
+                    }
+                
+
+
+    ]).then(function(answer){
+        connection.query("insert into employees(first_name, last_name, role_id, manager_id) values(?, ?, ?, ?);", 
+        [answer.first_name, answer.last_name, answer.role_id, answer.manager_id], function(err, response)
+        {
+            if (err)
+            (
+            console.log(err)
+            )
+            console.log(response)
+            start()
+        })
+    }
+  });
+  
