@@ -32,7 +32,7 @@ connection.connect(function(err) {
         // "view employees", "update employees",
       })
       .then(function(answer) {
-        // based on their answer, either call the bid or the post functions
+        // based on their answer, either they will add new employees or view it. 
         if (answer.userChoice=== "Add new employees") {
           addEmployee();
         }
@@ -83,5 +83,29 @@ connection.connect(function(err) {
             start()
         })
     }
-  });
-  
+
+    )}
+    // From here on, we are going to view the roles. 
+    function viewRoles() {
+        connection.query("SELECT * FROM roles", function (err, res) {
+          if (err) throw err;
+          console.table(res);
+          start();
+        });
+      }
+      // We are going to view the employees
+      function viewEmployees() {
+        connection.query("SELECT * FROM employees", function (err, res) {
+          if (err) throw err;
+          console.table(res);
+          start();
+        });
+      }
+      // Viewing departments
+      function viewDepartments() {
+        connection.query("SELECT * FROM Departments", function (err, res) {
+          if (err) throw err;
+          console.table(res);
+          start();
+        });
+      }
