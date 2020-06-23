@@ -17,6 +17,7 @@ var connection = mysql.createConnection({
 // connect to the mysql server and sql database
 connection.connect(function(err) {
     if (err) throw err;
+    console.log("connected as id " + connection.threadId);
     // run the start function after the connection is made to prompt the user
     start();
   });
@@ -28,7 +29,13 @@ connection.connect(function(err) {
         name: "userChoice",
         type: "list",
         message: "What would you like to do?",
-        choices: ["Add new employees", "View Employees", "View Department", "View Roles", "Add Department", "Add Role", "EXIT"]
+        choices: ["Add new employees",
+         "View Employees", 
+         "View Department", 
+         "View Roles", 
+         "Add Department", 
+         "Add Role", 
+         "EXIT"]
         // "view employees", "update employees",
       })
       .then(function(answer) {
@@ -36,11 +43,15 @@ connection.connect(function(err) {
         if (answer.userChoice=== "Add new employees") {
           addEmployee();
         }
-        else if(answer.userChoice === "View Employees") {
-          showEmployees();
+        else if(answer.userChoice === "View Roles") {
+          showRoles();
+        //   if(answer.userChoice === "View Departments") {
+        //     showDepartments();
+          
         } else{
           connection.end();
         }
+    
       });
   }
 
@@ -86,7 +97,7 @@ connection.connect(function(err) {
 
     )}
     // From here on, we are going to view the roles. 
-    function viewRoles() {
+    function showRoles() {
         connection.query("SELECT * FROM roles", function (err, res) {
           if (err) throw err;
           console.table(res);
@@ -94,7 +105,7 @@ connection.connect(function(err) {
         });
       }
       // We are going to view the employees
-      function viewEmployees() {
+      function showEmployees() {
         connection.query("SELECT * FROM employees", function (err, res) {
           if (err) throw err;
           console.table(res);
@@ -102,7 +113,7 @@ connection.connect(function(err) {
         });
       }
       // Viewing departments
-      function viewDepartments() {
+      function showDepartments() {
         connection.query("SELECT * FROM Departments", function (err, res) {
           if (err) throw err;
           console.table(res);
