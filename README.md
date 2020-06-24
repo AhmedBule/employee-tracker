@@ -12,6 +12,9 @@ View departments, roles, employees
 
 Update employee roles
 
+## A sample picture of the application 
+<img width="540" alt="Screen Shot 2020-06-23 at 11 34 04 PM" src="https://user-images.githubusercontent.com/25271965/85501297-b2612480-b5aa-11ea-89c8-2ad1b2fba2a3.png">
+
 ## Installation: 
 To install, run npm init and then use node server.js 
 
