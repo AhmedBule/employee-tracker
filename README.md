@@ -1,7 +1,7 @@
 # employee-tracker
 
 ### Description: 
-Note Taker is an application that you should be able to view and manage the departments, roles, and employees in any company. The command-line application should allow users to:
+Employee Tracker is an application that you should be able to view and manage the departments, roles, and employees in any company. The command-line application should allow users to:
 
 
 Add departments, roles, employees
