@@ -34,23 +34,34 @@ connection.connect(function(err) {
          "View Department", 
          "View Roles", 
          "Add Department", 
-         "Add Role", 
+         "Add Roles",
+         "Update Roles", 
          "EXIT"]
         // "view employees", "update employees",
       })
       .then(function(answer) {
         // based on their answer, either they will add new employees or view it. 
         if (answer.userChoice=== "Add new employees") {
-          addEmployee();
+            addEmployee();
         }
         else if(answer.userChoice === "View Roles") {
-          showRoles();
-         }else if(answer.userChoice === "View Department") {
-                showDepartments(); 
-          }
-          else if(answer.userChoice === "View Employees") {
+            showRoles();
+        }else if(answer.userChoice === "View Department") {
+            showDepartments(); 
+        }
+        else if(answer.userChoice === "View Employees") {
             showEmployees();
-      }
+        }
+        else if(answer.userChoice === "Add Roles") {
+            addRoles();
+        }
+        else if(answer.userChoice === "Add Department") {
+            addDepartment();
+        }
+        else if(answer.userChoice === "Update Roles") {
+            updateRoles();
+        }
+
       else{
         connection.end();
         //   if(answer.userChoice === "View Departments") {
@@ -59,18 +70,19 @@ connection.connect(function(err) {
     }
       });
   }
+// Adding employee
 
   function addEmployee(){
       inquirer.prompt([
           {
            name:"first_name",
            type: "input",
-           message:"Enter Employee First name ?"
+           message:"Enter Employee First name?"
            },
            {
             name:"last_name",
             type: "input",
-            message:"Enter Employee Last name ?"
+            message:"Enter Employee Last name?"
             },
             {
                 name:"role_id",
@@ -99,9 +111,11 @@ connection.connect(function(err) {
             start()
         })
     });
-    function addRole() {
-        inquirer
-          .prompt([
+  }
+
+  // Adding roles
+    function addRoles() {
+        inquirer.prompt([
             {
               name: "title",
               type: "input",
@@ -123,9 +137,9 @@ connection.connect(function(err) {
           ])
           .then(function(answer) {
             connection.query(
-                "insert into roles (title, salary, department_id) values(?, ?, ?, );"
-                [answer.tile, answer.salary, answer.department_id],
-              function(err, answer) {
+                "INSERT INTO roles (title, salary, department_id) values(?, ?, ?);",
+                [answer.title, answer.salary, answer.department_id],
+              function(err, response) {
                 if (err)
             (
             console.log(err)
@@ -136,23 +150,24 @@ connection.connect(function(err) {
           })
       }
 
-  };
+  // Adding departments
 
   function addDepartment() {
     inquirer
       .prompt([
         {
-          name: "departmentName",
+          name: "department_name",
           type: "input",
           message: "Enter Department name",
           
         },
       ])
       .then(function(answer) {
+          console.log(answer);
         connection.query(
-            "insert into departments(department_name)values(? );"
+            "INSERT INTO departments (department_name) values(?);",
             [answer.department_name],
-          function(err, answer) {
+          function(err, response ) {
             if (err)
         (
         console.log(err)
@@ -162,9 +177,6 @@ connection.connect(function(err) {
           });
       })
   }
-
-};
-
 
     // From here on, we are going to view the roles. 
     function showRoles() {
@@ -190,3 +202,41 @@ connection.connect(function(err) {
           start();
         });
       }
+
+// Updating Roles
+
+function updateRoles() {
+    inquirer.prompt([
+        {
+          name: "title",
+          type: "input",
+          message: "Update the title of the employee",
+          
+        },
+        {
+          name: "salary", 
+          type: "input",
+          message: "Update employee salary",
+          
+        },
+        {
+          name: "department_id",
+          type: "input",
+          message: "Update employee department id",
+          
+        }
+      ])
+      .then(function(answer) {
+        connection.query(
+            "UPDATE  roles SET title = $1, salary = $2, department_id = $3  WHERE ? ;",
+            [answer.title, answer.salary, answer.department_id],
+          function(err, response) {
+            if (err)
+        (
+        console.log(err)
+        )
+        console.log(response)
+        start()
+          });
+      })
+  }
