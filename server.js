@@ -126,17 +126,46 @@ connection.connect(function(err) {
                 "insert into roles (title, salary, department_id) values(?, ?, ?, );"
                 [answer.tile, answer.salary, answer.department_id],
               function(err, answer) {
-                if (err) {
-                  throw err;
-                }
-                console.table(answer);
-              }
-            );
-            start();
-          });
+                if (err)
+            (
+            console.log(err)
+            )
+            console.log(response)
+            start()
+              });
+          })
       }
 
   };
+
+  function addDepartment() {
+    inquirer
+      .prompt([
+        {
+          name: "departmentName",
+          type: "input",
+          message: "Enter Department name",
+          
+        },
+      ])
+      .then(function(answer) {
+        connection.query(
+            "insert into departments(department_name)values(? );"
+            [answer.department_name],
+          function(err, answer) {
+            if (err)
+        (
+        console.log(err)
+        )
+        console.log(response)
+        start()
+          });
+      })
+  }
+
+};
+
+
     // From here on, we are going to view the roles. 
     function showRoles() {
         connection.query("SELECT * FROM roles", function (err, res) {
