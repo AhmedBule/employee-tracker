@@ -45,13 +45,18 @@ connection.connect(function(err) {
         }
         else if(answer.userChoice === "View Roles") {
           showRoles();
+         }else if(answer.userChoice === "View Department") {
+                showDepartments(); 
+          }
+          else if(answer.userChoice === "View Employees") {
+            showEmployees();
+      }
+      else{
+        connection.end();
         //   if(answer.userChoice === "View Departments") {
         //     showDepartments();
           
-        } else{
-          connection.end();
-        }
-    
+    }
       });
   }
 
@@ -93,9 +98,45 @@ connection.connect(function(err) {
             console.log(response)
             start()
         })
-    }
+    });
+    function addRole() {
+        inquirer
+          .prompt([
+            {
+              name: "title",
+              type: "input",
+              message: "enter the title of the employee",
+              
+            },
+            {
+              name: "salary", 
+              type: "input",
+              message: "enter employee salary",
+              
+            },
+            {
+              name: "department_id",
+              type: "input",
+              message: "enter employee department id",
+              
+            }
+          ])
+          .then(function(answer) {
+            connection.query(
+                "insert into roles (title, salary, department_id) values(?, ?, ?, );"
+                [answer.tile, answer.salary, answer.department_id],
+              function(err, answer) {
+                if (err) {
+                  throw err;
+                }
+                console.table(answer);
+              }
+            );
+            start();
+          });
+      }
 
-    )}
+  };
     // From here on, we are going to view the roles. 
     function showRoles() {
         connection.query("SELECT * FROM roles", function (err, res) {
