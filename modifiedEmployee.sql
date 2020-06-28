@@ -4,6 +4,7 @@ insert into departments(department_name)values("marketing");
 insert into departments(department_name)values("sales");
 insert into departments(department_name)values("IT");
 select * from departments;
+
 insert into roles (title, salary, department_id) values("manager", 54000, 1);
 insert into roles (title, salary, department_id) values("Team Lead", 65000, 1);
 insert into roles (title, salary, department_id) values("supervisor", 49000, 1);
@@ -21,14 +22,6 @@ select * from roles;
 delete from roles where role_id > 9;
 drop table employees;
 
-CREATE TABLE employees (
-  employee_id INT AUTO_INCREMENT PRIMARY KEY,
-  first_name 	VARCHAR(30) NOT NULL,
-  last_name  	VARCHAR(30) NOT NULL,
-  role_id 	INT NOT NULL,
-  manager_id    INT,
-  FOREIGN KEY (role_id) REFERENCES roles(role_id)
-);
 
 insert into employees(first_name, last_name, role_id, manager_id) values("John", "Doe", 7, 0);
 insert into employees(first_name, last_name, role_id, manager_id) values("Allen", "Smith", 4, 0);
