@@ -18,6 +18,8 @@ Update employee roles
 ## Installation: 
 To install, run npm init and then use node server.js 
 
+![update role image](https://github.com/AhmedBule/employee-tracker/blob/master/Screen%20Shot%202020-06-28%20at%205.44.25%20PM.png)
+
 ## Usage: 
 Use the MySQL NPM package to connect to your MySQL database and perform queries.
 
